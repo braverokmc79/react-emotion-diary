@@ -1,6 +1,6 @@
 
 import './App.css';
-import React, { useReducer, useRef } from 'react';
+import React, { useEffect, useReducer, useRef } from 'react';
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
 import Home from "./pages/Home";
@@ -18,13 +18,11 @@ const reducer = (state, action) => {
   let newState = [];
   switch (action.type) {
     case "INIT":
-      return action.data;
+      return dummyData;
 
     case "CREATE": {
-      const newItem = {
-        ...action.data
-      };
-      newState = [newItem, ...state];
+      console.log("action.data  : ", action.data);
+      newState = [action.data, ...state];
       break;
     }
 
@@ -66,7 +64,7 @@ const dummyData = [
     id: 3,
     emotion: 3,
     content: "오늘의일기 3번",
-    date: 1668237921758
+    date: 1668384000000
   },
   {
     id: 4,
@@ -92,10 +90,17 @@ const dummyData = [
 function App() {
 
   const [data, dispatch] = useReducer(reducer, []);
-  const dataId = useRef(0);
+  const dataId = useRef(7);
+
+  useEffect(() => {
+    dispatch({ type: "INIT" });
+
+  }, []);
 
   //CREATE
   const onCreate = (date, content, emotion) => {
+    console.log("onCreate  : ", date, content, emotion);
+
     dispatch({
       type: "CREATE", data: {
         id: dataId.current,
@@ -129,7 +134,7 @@ function App() {
 
 
   return (
-    <DiaryStateContext.Provider value={dummyData}>
+    <DiaryStateContext.Provider value={data}>
       <DiaryDispatchContext.Provider value={{ onCreate, onEdit, onRemove }} >
         <BrowserRouter>
           <div className="App">
