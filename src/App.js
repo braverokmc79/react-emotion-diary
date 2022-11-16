@@ -18,7 +18,7 @@ const reducer = (state, action) => {
   let newState = [];
   switch (action.type) {
     case "INIT":
-      return dummyData;
+      return action.data;
 
     case "CREATE": {
       console.log("action.data  : ", action.data);
@@ -27,6 +27,7 @@ const reducer = (state, action) => {
     }
 
     case "REMOVE": {
+
       newState = state.filter((it) => it.id !== action.targetId);
       break;
     }
@@ -39,6 +40,8 @@ const reducer = (state, action) => {
     default:
       return state;
   }
+
+  localStorage.setItem("diary", JSON.stringify(newState));
 
   return newState;
 }
@@ -89,13 +92,36 @@ const dummyData = [
 
 function App() {
 
-  const [data, dispatch] = useReducer(reducer, []);
-  const dataId = useRef(7);
 
   useEffect(() => {
-    dispatch({ type: "INIT" });
+
+
+    //localStorage 저장하기
+    // localStorage.setItem("item1");
+    // localStorage.setItem("item2");
+    // localStorage.setItem("item3");
+
+    //localStorage 가져오기
+    // const item1 = localStorage.getItem("item1");
+    // const item2 = localStorage.getItem("item2");
+    // const item3 = JSON.parse(localStorage.getItem("item3"));
+    // console.log({ item1, item2, item3 })
+
+
+    const localData = localStorage.getItem('diary');
+    if (localData) {
+      const diaryList = JSON.parse(localData).sort((a, b) => parseInt(b.id) - parseInt(a.id));
+      dataId.current = parseInt(diaryList[0].id) + 1;
+      console.log("  dataId.current : ", dataId.current);
+      dispatch({ type: "INIT", data: diaryList });
+    }
 
   }, []);
+
+
+
+  const [data, dispatch] = useReducer(reducer, []);
+  const dataId = useRef(7);
 
   //CREATE
   const onCreate = (date, content, emotion) => {
@@ -115,6 +141,7 @@ function App() {
 
   //REMOVE
   const onRemove = (targetId) => {
+    console.log(" 삭제 : ", targetId);
     dispatch({ type: "RMOVE", targetId });
   };
 

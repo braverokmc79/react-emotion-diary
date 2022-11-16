@@ -7,11 +7,10 @@ import DiaryList from './../components/DiaryList';
 const Home = () => {
 
     const diaryList = useContext(DiaryStateContext);
-
-
     const [data, setData] = useState([]);
     const [curDate, setCurDate] = useState(new Date());
     const headText = `${curDate.getFullYear()}년 ${curDate.getMonth() + 1}월`;
+
 
     useEffect(() => {
         if (diaryList.length >= 1) {
@@ -26,7 +25,10 @@ const Home = () => {
             const lastDay = new Date(
                 curDate.getFullYear(),
                 curDate.getMonth() + 1,
-                0
+                0,
+                23,
+                59,
+                29
             ).getTime();
 
             // console.log(" firstDay : lastDay ", firstDay, lastDay);
