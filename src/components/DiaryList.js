@@ -14,7 +14,8 @@ const filterOptionList = [
     { value: "bad", name: "안좋은 감정만" },
 ]
 
-const ControlMenu = ({ value, setOnChange, optionList }) => {
+const ControlMenu = React.memo(({ value, setOnChange, optionList }) => {
+    //console.log("ControlMenu");
     return <select
         className='ControlMenu'
         value={value} onChange={(e) => setOnChange(e.target.value)} >
@@ -23,7 +24,7 @@ const ControlMenu = ({ value, setOnChange, optionList }) => {
                 (<option key={idx} value={it.value}>{it.name}</option>))
         }
     </select>
-}
+})
 
 const DiaryList = ({ diaryList }) => {
     const navigate = useNavigate();

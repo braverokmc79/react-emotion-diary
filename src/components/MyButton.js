@@ -11,4 +11,4 @@ const MyButton = ({ text, type, onClick }) => {
     );
 };
 
-export default MyButton;
+export default React.memo(MyButton);

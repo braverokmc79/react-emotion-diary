@@ -6,7 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 const DiaryItem = ({ id, content, emotion, date }) => {
     const navigate = useNavigate();
-
     const env = process.env;
     env.PUBLIC_URL = env.PUBLIC_URL || "";
 
@@ -40,4 +39,4 @@ const DiaryItem = ({ id, content, emotion, date }) => {
     );
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);

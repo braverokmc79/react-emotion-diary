@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 
-const EmotionItem = ({ emotion_id, emotion_img, emotion_descript, onClick, isSelected }) => {
+const EmotionItem = ({ emotion_id, emotion_img,
+    emotion_descript,
+    onClick, isSelected }) => {
 
 
 
@@ -13,4 +15,4 @@ const EmotionItem = ({ emotion_id, emotion_img, emotion_descript, onClick, isSel
     </div>
 };
 
-export default EmotionItem;
+export default React.memo(EmotionItem);
