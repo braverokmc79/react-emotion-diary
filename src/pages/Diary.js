@@ -16,6 +16,13 @@ const Diary = () => {
     // console.log("contextcontext ", diaryList);
 
     useEffect(() => {
+        const titleElement = document.getElementsByTagName("title")[0];
+        titleElement.innerHTML = `감정 일기장 - ${id} 번 일기`;
+    }, [id]);
+
+
+
+    useEffect(() => {
 
         if (diaryList) {
             const targetDiary = diaryList.find((it) => parseInt(it.id) === parseInt(id));
@@ -28,7 +35,7 @@ const Diary = () => {
             }
         }
 
-    }, [id, diaryList]);
+    }, [id, diaryList, navigate]);
 
 
     if (!data) {
@@ -52,7 +59,7 @@ const Diary = () => {
                         <div className={
                             ["diary_img_wrapper", `diary_img_wrapper_${data.emotion}`].join(" ")
                         }>
-                            <img src={curEmotionData.emotion_img} />
+                            <img src={curEmotionData.emotion_img} alt="" />
                             <div className='emotion_descript'>
                                 {curEmotionData.emotion_descript}
                             </div>

@@ -8,10 +8,6 @@ import New from "./pages/New"
 import Edit from "./pages/Edit"
 import Diary from "./pages/Diary"
 
-//COMPONENTS
-import MyButton from './components/MyButton';
-import MyHeader from './components/MyHeader';
-
 
 
 const reducer = (state, action) => {
@@ -50,70 +46,22 @@ const reducer = (state, action) => {
 export const DiaryStateContext = React.createContext();
 export const DiaryDispatchContext = React.createContext();
 
-const dummyData = [
-  {
-    id: 1,
-    emotion: 1,
-    content: "오늘의일기 1번",
-    date: 1668237921756
-  },
-  {
-    id: 2,
-    emotion: 2,
-    content: "오늘의일기 2번",
-    date: 1668237921757
-  },
-  {
-    id: 3,
-    emotion: 3,
-    content: "오늘의일기 3번",
-    date: 1668384000000
-  },
-  {
-    id: 4,
-    emotion: 4,
-    content: "오늘의일기 4번",
-    date: 1668237921759
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "오늘의일기 5번",
-    date: 1668237921760
-  },
-  {
-    id: 6,
-    emotion: 2,
-    content: "오늘의일기 6번",
-    date: 176823792180
-  },
-]
+
 
 
 function App() {
 
 
   useEffect(() => {
-
-
-    //localStorage 저장하기
-    // localStorage.setItem("item1");
-    // localStorage.setItem("item2");
-    // localStorage.setItem("item3");
-
-    //localStorage 가져오기
-    // const item1 = localStorage.getItem("item1");
-    // const item2 = localStorage.getItem("item2");
-    // const item3 = JSON.parse(localStorage.getItem("item3"));
-    // console.log({ item1, item2, item3 })
-
-
     const localData = localStorage.getItem('diary');
     if (localData) {
       const diaryList = JSON.parse(localData).sort((a, b) => parseInt(b.id) - parseInt(a.id));
-      dataId.current = parseInt(diaryList[0].id) + 1;
-      // console.log("  dataId.current : ", dataId.current);
-      dispatch({ type: "INIT", data: diaryList });
+
+      if (diaryList.length >= 1) {
+        dataId.current = parseInt(diaryList[0].id) + 1;
+        dispatch({ type: "INIT", data: diaryList });
+      }
+
     }
 
   }, []);
@@ -125,7 +73,7 @@ function App() {
 
   //CREATE
   const onCreate = (date, content, emotion) => {
-    console.log("onCreate  : ", date, content, emotion);
+    //console.log("onCreate  : ", date, content, emotion);
 
     dispatch({
       type: "CREATE", data: {
@@ -142,7 +90,7 @@ function App() {
   //REMOVE
   const onRemove = (targetId) => {
     console.log(" 삭제 : ", targetId);
-    dispatch({ type: "RMOVE", targetId });
+    dispatch({ type: "REMOVE", targetId });
   };
 
 
